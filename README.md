@@ -7,7 +7,7 @@ qb-target: https://github.com/BerkieBb/qb-target
 qb-lock: qb-lock: https://github.com/M-Middy/qb-lock
 
 # Preview
-https://youtu.be/Zu9TovZG6cE
+https://www.youtube.com/watch?v=tjS9GWmvLII
 
 # Discord
 https://discord.gg/AQHbsahZsV 
