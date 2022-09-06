@@ -11,3 +11,5 @@ https://www.youtube.com/watch?v=tjS9GWmvLII
 
 # Discord
 https://discord.gg/AQHbsahZsV 
+
+# Big thanks to abdel1touimi for his rework <3
