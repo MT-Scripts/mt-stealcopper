@@ -2,16 +2,16 @@ fx_version 'cerulean'
 
 game 'gta5'
 
-author 'PassPar2'
+author 'mt scripts'
 
-description 'pp2-stealboxes'
+description 'mt-stealcopper'
 
 version '0.1'
 
 shared_scripts {
     '@qb-core/shared/locale.lua',
     'locales/en.lua',
-	'config/config.lua',
+    'config/config.lua',
 }
 
 server_scripts{

@@ -27,7 +27,7 @@ local function startStealingBox(entity)
             NetworkRequestControlOfEntity(entity)
             SetEntityAsMissionEntity(entity)
             Wait(100)
-            TriggerServerEvent("pp2-stealboxes:server:stealedbox")
+            TriggerServerEvent("mt-stealcopper:server:stealedbox")
             DeleteEntity(entity)
             QBCore.Functions.Notify(Lang:t("stealboxes.box_removed"), "primary")
         end
@@ -47,7 +47,7 @@ CreateThread(function()
                     type = "client",
                     action = function(entity)
                         if IsPedAPlayer(entity) then return false end
-                        TriggerEvent('pp2-stealboxes:client:steal', entity)
+                        TriggerEvent('mt-stealcopper:client:steal', entity)
                     end,
                     label = Lang:t("stealboxes.target_label"),
                     item = "advancedlockpick",
@@ -58,7 +58,7 @@ CreateThread(function()
     )
 end)
 
-RegisterNetEvent("pp2-stealboxes:client:steal", function(entity)
+RegisterNetEvent("mt-stealcopper:client:steal", function(entity)
     if Config.policeCall then PoliceCall() end
     local success = exports['qb-lock']:StartLockPickCircle(2,30)
     if success then
