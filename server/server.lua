@@ -19,6 +19,6 @@ local function giveStealedItemsToPlayer()
   end
 end
 
-RegisterServerEvent('pp2-stealboxes:server:stealedbox', function(entity)
+RegisterServerEvent('mt-stealcopper:server:stealedbox', function(entity)
   giveStealedItemsToPlayer()
 end)
