@@ -7,6 +7,7 @@ local function PoliceCall()
     end
     if math.random(1, 100) <= chance then
         TriggerServerEvent('police:server:policeAlert', Lang:t("stealboxes.police_notification"))
+        QBCore.Functions.Notify(Lang:t("stealboxes.police_notified"), 'error')
     end
 end
 

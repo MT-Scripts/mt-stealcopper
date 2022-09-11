@@ -7,6 +7,7 @@ local Translations = {
     ["messed_up_error"] = "YOU MESSED UP!!!",
     ["box_removed"] = "You stole the box",
     ["police_notification"] = "Box steal in pogress",
+    ["police_notified"] = "The police have been notified!!!",
   },
 }
 Lang = Locale:new({
