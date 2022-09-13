@@ -11,6 +11,15 @@ local function PoliceCall()
     end
 end
 
+local function RemoveBoxFromScene(entity)
+    NetworkRegisterEntityAsNetworked(entity)
+    Wait(100)
+    NetworkRequestControlOfEntity(entity)
+    SetEntityAsMissionEntity(entity)
+    Wait(100)
+    DeleteEntity(entity)
+end
+
 local function startStealingBox(entity)
     QBCore.Functions.Progressbar("stealingBox", Lang:t("stealboxes.stealing_animation_label"), Config.searchTime, false, true, {
         disableMovement = true,
@@ -23,14 +32,12 @@ local function startStealingBox(entity)
         flags = 49,
     }, {}, {}, function()
         if DoesEntityExist(entity) then
-            NetworkRegisterEntityAsNetworked(entity)
-            Wait(100)
-            NetworkRequestControlOfEntity(entity)
-            SetEntityAsMissionEntity(entity)
-            Wait(100)
-            TriggerServerEvent("mt-stealcopper:server:stealedbox")
-            DeleteEntity(entity)
+            local pos = GetEntityCoords(entity)
+            local objectCoords = pos.x .. pos.y .. pos.z
+            TriggerServerEvent("mt-stealcopper:server:stealedbox", objectCoords)
+            RemoveBoxFromScene(entity)
             QBCore.Functions.Notify(Lang:t("stealboxes.box_removed"), "primary")
+            if Config.policeCall then PoliceCall() end
         end
     end, function()
         Lang:t("stealboxes.stealing_animation_canceled")
@@ -60,16 +67,24 @@ CreateThread(function()
 end)
 
 RegisterNetEvent("mt-stealcopper:client:steal", function(entity)
-    if Config.policeCall then PoliceCall() end
-    local success = exports['qb-lock']:StartLockPickCircle(2,30)
-    if success then
-        success = exports['qb-lock']:StartLockPickCircle(4,10)
-        if success then
-            startStealingBox(entity)
-        else
-            QBCore.Functions.Notify(Lang:t("stealboxes.messed_up_error"), 'error')
-        end
-    else
-        QBCore.Functions.Notify(Lang:t("stealboxes.messed_up_error"), 'error')
-    end
+    local pos = GetEntityCoords(entity)
+    local objectCoords = pos.x .. pos.y .. pos.z
+	QBCore.Functions.TriggerCallback('mt-stealcopper:server:getbox', function(occupied)
+		if occupied then
+            RemoveBoxFromScene(entity)
+			QBCore.Functions.Notify('Box aleady stolen.!!', 'error')
+		else
+            local success = exports['qb-lock']:StartLockPickCircle(2,30)
+            if success then
+                success = exports['qb-lock']:StartLockPickCircle(4,10)
+                if success then
+                    startStealingBox(entity)
+                else
+                    QBCore.Functions.Notify(Lang:t("stealboxes.messed_up_error"), 'error')
+                end
+            else
+                QBCore.Functions.Notify(Lang:t("stealboxes.messed_up_error"), 'error')
+            end
+		end
+	end, objectCoords)
 end)

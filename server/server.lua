@@ -1,4 +1,5 @@
 local QBCore = exports['qb-core']:GetCoreObject()
+local boxStolen = {}
 
 local function giveStealedItemsToPlayer()
   local src = source
@@ -19,6 +20,12 @@ local function giveStealedItemsToPlayer()
   end
 end
 
-RegisterServerEvent('mt-stealcopper:server:stealedbox', function(entity)
+RegisterServerEvent('mt-stealcopper:server:stealedbox', function(objectCoords)
+	boxStolen[objectCoords] = true
   giveStealedItemsToPlayer()
+end)
+
+QBCore.Functions.CreateCallback('mt-stealcopper:server:getbox', function(source, cb, objectCoords)
+  local objectCoords = objectCoords
+	cb(boxStolen[objectCoords])
 end)

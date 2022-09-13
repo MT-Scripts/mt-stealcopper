@@ -2,7 +2,7 @@ Config = {}
 Config.searchTime = 14000 -- seconds it takes to remove objects from box
 Config.boxDistance = 2.5 -- distance from box
 Config.policeCall = true -- call police
-Config.searchableModels = {1709954128, 1131941737, -1625667924, -2007495856, -1620823304, -2008643115} -- searchableModels in fivem
+Config.searchableModels = {1709954128, 1131941737, -1625667924, -2007495856, -1620823304, -2008643115, -686494084} -- searchableModels in fivem
 
 Config.ItemTable = {
   [1] = "metalscrap",
