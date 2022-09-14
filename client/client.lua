@@ -50,7 +50,7 @@ CreateThread(function()
         {
             options = {
                 {
-                    targeticon = 'fas fa-mask', 
+                    targeticon = 'fa-solid fa-screwdriver-wrench', 
                     icon = "fas fa-mask",
                     type = "client",
                     action = function(entity)
@@ -58,7 +58,7 @@ CreateThread(function()
                         TriggerEvent('mt-stealcopper:client:steal', entity)
                     end,
                     label = Lang:t("stealboxes.target_label"),
-                    item = "advancedlockpick",
+                    item = Config.stealItem,
                 }
             },
             distance = Config.boxDistance,
@@ -72,7 +72,7 @@ RegisterNetEvent("mt-stealcopper:client:steal", function(entity)
 	QBCore.Functions.TriggerCallback('mt-stealcopper:server:getbox', function(occupied)
 		if occupied then
             RemoveBoxFromScene(entity)
-			QBCore.Functions.Notify('Box aleady stolen.!!', 'error')
+			QBCore.Functions.Notify(Lang:t("stealboxes.already_stolen_error"), 'error')
 		else
             local success = exports['qb-lock']:StartLockPickCircle(2,30)
             if success then
