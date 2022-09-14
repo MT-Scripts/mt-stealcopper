@@ -11,9 +11,15 @@ Simple electric-box robbery, another illegal way to get materials ;)
 # Config
 ```
 Config.searchTime = 14000 -- seconds it takes to remove materials from electric-box
+
 Config.boxDistance = 2.5 -- distance from electric-box
+
 Config.policeCall = true -- call police set to false if you don't want it
+
+Config.stealItem = "advancedlockpick" -- item required
+
 Config.searchableModels = {1709954128, 1131941737, -1625667924, -2007495856, -1620823304, -2008643115} -- searchable models id in gta5 you can add your own
+
 Config.ItemTable = { -- materials that can be robbed
   [1] = "metalscrap",
   [2] = "plastic",
@@ -23,6 +29,7 @@ Config.ItemTable = { -- materials that can be robbed
   [6] = "steel",
   [7] = "glass",
 }
+
 Config.MinItemsReceived = 2 -- min items received in a box
 Config.MaxItemsReceived = 5 
 Config.MinItemReceivedQty = 6 -- min qty of item received
