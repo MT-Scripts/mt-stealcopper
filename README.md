@@ -51,7 +51,7 @@ qb-policejob: https://github.com/qbcore-framework/qb-policejob
 
 qb-lock: qb-lock: https://github.com/M-Middy/qb-lock
 
-# Preview
+# Preview (Outdated)
 https://www.youtube.com/watch?v=tjS9GWmvLII
 
 # Discord
