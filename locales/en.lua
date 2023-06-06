@@ -8,6 +8,7 @@ local Translations = {
     ["box_removed"] = "You stole the box",
     ["police_notification"] = "Box steal in pogress",
     ["police_notified"] = "The police have been notified!!!",
+    ["insuficientCops"] = 'The cutter is without battery'
   },
 }
 Lang = Locale:new({

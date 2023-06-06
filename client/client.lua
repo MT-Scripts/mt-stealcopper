@@ -6,7 +6,14 @@ local function PoliceCall()
         chance = 50
     end
     if math.random(1, 100) <= chance then
-        TriggerServerEvent('police:server:policeAlert', Lang:t("stealboxes.police_notification"))
+        if Config.dispatchName == 'default' then
+            TriggerServerEvent('police:server:policeAlert', Lang:t("stealboxes.police_notification"))
+
+        elseif 'ps' then
+            exports['ps-dispatch']:SignRobbery()
+        else 
+            print('Disptach no correct config')
+        end
         QBCore.Functions.Notify(Lang:t("stealboxes.police_notified"), 'error')
     end
 end
@@ -67,24 +74,43 @@ CreateThread(function()
 end)
 
 RegisterNetEvent("mt-stealcopper:client:steal", function(entity)
-    local pos = GetEntityCoords(entity)
-    local objectCoords = pos.x .. pos.y .. pos.z
-	QBCore.Functions.TriggerCallback('mt-stealcopper:server:getbox', function(occupied)
-		if occupied then
-            RemoveBoxFromScene(entity)
-			QBCore.Functions.Notify(Lang:t("stealboxes.already_stolen_error"), 'error')
-		else
-            local success = exports['qb-lock']:StartLockPickCircle(2,30)
-            if success then
-                success = exports['qb-lock']:StartLockPickCircle(4,10)
-                if success then
-                    startStealingBox(entity)
+    QBCore.Functions.TriggerCallback('mt-stealcopper:server:GetCops', function(cops)
+        if cops >= Config.RequiredCops then
+            local pos = GetEntityCoords(entity)
+            local objectCoords = pos.x .. pos.y .. pos.z
+            QBCore.Functions.TriggerCallback('mt-stealcopper:server:getbox', function(occupied)
+                if occupied then
+                    RemoveBoxFromScene(entity)
+                    QBCore.Functions.Notify(Lang:t("stealboxes.already_stolen_error"), 'error')
                 else
-                    QBCore.Functions.Notify(Lang:t("stealboxes.messed_up_error"), 'error')
+                    if Config.minigameSource == 'qb-lock' then 
+                        local success = exports['qb-lock']:StartLockPickCircle(2,30)
+                        if success then
+                            success = exports['qb-lock']:StartLockPickCircle(4,10)
+                            if success then
+                                startStealingBox(entity)
+                            else
+                                QBCore.Functions.Notify(Lang:t("stealboxes.messed_up_error"), 'error')
+                            end
+                        else
+                            QBCore.Functions.Notify(Lang:t("stealboxes.messed_up_error"), 'error')
+                        end
+                    elseif 'ps-ui' then
+                        exports['ps-ui']:Circle(function(success)
+                            if success then
+                                startStealingBox(entity)
+                            else
+                                QBCore.Functions.Notify(Lang:t("stealboxes.messed_up_error"), 'error')
+                            end
+                        end, Config.minigame_NumberOfCircles, Config.minigame_MS) -- NumberOfCircles, MS
+                    else
+                        print('Minigame is incorrect config')
+                    end  
                 end
-            else
-                QBCore.Functions.Notify(Lang:t("stealboxes.messed_up_error"), 'error')
-            end
-		end
-	end, objectCoords)
+            end, objectCoords)
+        else 
+            QBCore.Functions.Notify(Lang:t("stealboxes.insuficientCops"), 'error')
+        end
+    end)
+    
 end)

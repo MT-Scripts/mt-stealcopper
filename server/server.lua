@@ -1,5 +1,6 @@
 local QBCore = exports['qb-core']:GetCoreObject()
 local boxStolen = {}
+local CachedPoliceAmount = {}
 
 local function giveStealedItemsToPlayer()
   local src = source
@@ -28,4 +29,16 @@ end)
 QBCore.Functions.CreateCallback('mt-stealcopper:server:getbox', function(source, cb, objectCoords)
   local objectCoords = objectCoords
 	cb(boxStolen[objectCoords])
+end)
+
+QBCore.Functions.CreateCallback('mt-stealcopper:server:GetCops', function(source, cb)
+  local src = source
+	local amount = 0
+  for _, v in pairs(QBCore.Functions.GetQBPlayers()) do
+    if v.PlayerData.job.name == Config.policeJobName and v.PlayerData.job.onduty then
+      amount = amount + 1
+    end
+  end
+  CachedPoliceAmount[src] = amount
+  cb(amount)
 end)
